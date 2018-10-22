@@ -31,22 +31,23 @@ Dir   4.4   4.5  4.6  4.7
 #include <math.h>
 
 //--------------------Important values/Parameters--------------------------------//
-//angle at which action is taken, in milliradians
+//The permissible deviation of the angle between the acceleration vector and the y axis in milliradians
 const int ANGLE_TOLERANCE = 50;
 //distance motor moves by default
 const int MOTOR_STEP = 100;
-//Height of the patient when on flat ground in mm
+//Leg height of when device is on flat ground in mm
 const int PATIENT_HEIGHT = 1200;
 //Maximum height of legs in mm
 const int MAX_HEIGHT = 1825;
-//Pin numbers for direction pins 1, 2, 3, 4 IN ORDER
+//Logical OR of pin numbers for direction output pins for 1, 2, 3, 4 IN ORDER
 const uint_fast8_t DIRECTION_PINS = GPIO_PIN4 | GPIO_PIN5 | GPIO_PIN6 | GPIO_PIN7;
-
-const int UP = 1;
-const int DOWN = 0;
+//Boolean value of output pin which causes legHeight to increase
+const bool UP = 1;
+//Boolean value of output pin which causes legHeight to decrease
+const bool DOWN = 0;
 const float pi = 3.14159;
 
-//Map CCRs 1,2,3,4 to pins 4.0,4.1,4.2,.3 respectively
+//Map CCRs 1,2,3,4 to pins 4.0,4.1,4.2,4.3 respectively
 const uint8_t port4_mapping[] =
 {
         PMAP_TA0CCR1A,  PMAP_TA0CCR2A,  PMAP_TA0CCR3A, PMAP_TA0CCR4A,
@@ -57,7 +58,7 @@ const uint8_t port4_mapping[] =
 
 int debug;
 
-//pitch is positive 'backwards' or going uphill (around Z axis). In milliradians
+//Pitch is rotation around the Z axis, positive 'backwards' or going uphill following right-hand-rule. In milliradians.
 int pitch;
 //roll is positive to the right (around X axis). In milliradians
 int roll;
